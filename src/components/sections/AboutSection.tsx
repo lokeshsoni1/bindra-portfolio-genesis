@@ -88,9 +88,13 @@ const AboutSection = () => {
               <div className="absolute -left-6 -top-6 w-32 h-32 bg-primary/10 rounded-xl -z-10"></div>
               <div className="absolute -right-6 -bottom-6 w-32 h-32 bg-primary/20 rounded-xl -z-10"></div>
               
-              {/* Replace with actual image when available */}
-              <div className="w-64 h-72 md:w-80 md:h-96 bg-muted rounded-xl overflow-hidden flex items-center justify-center border border-border">
-                <div className="text-6xl font-bold text-primary">PB</div>
+              {/* Actual image */}
+              <div className="w-64 h-72 md:w-80 md:h-96 rounded-xl overflow-hidden flex items-center justify-center border border-border">
+                <img 
+                  src="/lovable-uploads/f0260894-4985-44b1-b4a2-3dc26ef8cc72.png" 
+                  alt="Pankaj Bindra" 
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </div>

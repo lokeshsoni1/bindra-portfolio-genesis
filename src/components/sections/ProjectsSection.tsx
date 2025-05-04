@@ -9,7 +9,7 @@ interface Project {
   tags: string[];
   github: string;
   demo?: string;
-  image?: string;
+  image: string;
 }
 
 const projects: Project[] = [
@@ -19,14 +19,14 @@ const projects: Project[] = [
     tags: ["Python", "GUI", "Desktop App"],
     github: "https://github.com/lokeshsoni1/python_calculator",
     demo: "https://lokeshsoni1.github.io/python_calculator/",
-    image: "/placeholder.svg",
+    image: "/assets/calculator-project.jpg",
   },
   {
     title: "Portfolio Website",
     description: "A personal portfolio website showcasing my projects, skills, and experience. Built with React and Tailwind CSS.",
     tags: ["React", "TypeScript", "Tailwind"],
     github: "#",
-    image: "/placeholder.svg",
+    image: "/assets/portfolio-project.jpg",
   },
   {
     title: "Milk Planner",
@@ -34,7 +34,7 @@ const projects: Project[] = [
     tags: ["Planning", "Management", "Organization"],
     github: "https://github.com/lokeshsoni1/milk_planner",
     demo: "https://lokeshsoni1.github.io/milk_planner/",
-    image: "/placeholder.svg",
+    image: "/assets/milk-planner.jpg",
   }
 ];
 
@@ -53,16 +53,12 @@ const ProjectsSection = () => {
             <Card key={index} className="card-hover group">
               <CardHeader className="p-0 overflow-hidden">
                 <div className="h-48 bg-muted relative">
-                  <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
-                    {project.image ? (
-                      <img 
-                        src={project.image} 
-                        alt={project.title} 
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="text-6xl font-bold opacity-20">Project</div>
-                    )}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <img 
+                      src={project.image} 
+                      alt={project.title} 
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-80 transition-opacity flex items-center justify-center">
                     <div className="flex gap-4">

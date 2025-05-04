@@ -9,6 +9,8 @@ const HeroSection = () => {
   const [index, setIndex] = useState(0);
   const [showCursor, setShowCursor] = useState(true);
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [typingSpeed, setTypingSpeed] = useState(100);
 
   const phrases = [
     "Web Developer",
@@ -18,51 +20,38 @@ const HeroSection = () => {
   ];
 
   useEffect(() => {
-    const typingInterval = setInterval(() => {
+    const interval = setTimeout(() => {
       const currentPhrase = phrases[currentPhraseIndex];
       
-      if (index < currentPhrase.length) {
-        setDisplayText(prevText => prevText + currentPhrase[index]);
-        setIndex(prevIndex => prevIndex + 1);
-      } else {
-        // Pause at the end of the phrase
-        clearInterval(typingInterval);
+      // If deleting
+      if (isDeleting) {
+        setDisplayText(prevText => prevText.substring(0, prevText.length - 1));
+        setTypingSpeed(50); // Faster when deleting
         
-        // Wait and then start erasing
-        setTimeout(() => {
-          const erasingInterval = setInterval(() => {
-            if (displayText.length > 0) {
-              setDisplayText(prevText => prevText.slice(0, -1));
-            } else {
-              clearInterval(erasingInterval);
-              setIndex(0);
-              setCurrentPhraseIndex((prevIndex) => (prevIndex + 1) % phrases.length);
-              
-              // Start typing the next phrase after a short pause
-              setTimeout(() => {
-                const newTypingInterval = setInterval(() => {
-                  const nextPhrase = phrases[(currentPhraseIndex + 1) % phrases.length];
-                  
-                  if (index < nextPhrase.length) {
-                    setDisplayText(prevText => prevText + nextPhrase[index]);
-                    setIndex(prevIndex => prevIndex + 1);
-                  } else {
-                    clearInterval(newTypingInterval);
-                  }
-                }, 100);
-                
-                return () => clearInterval(newTypingInterval);
-              }, 500);
-            }
-          }, 50);
-          
-          return () => clearInterval(erasingInterval);
-        }, 1500);
+        // When fully deleted, start typing the next phrase
+        if (displayText === "") {
+          setIsDeleting(false);
+          setCurrentPhraseIndex((prevIndex) => (prevIndex + 1) % phrases.length);
+          setTypingSpeed(100);
+        }
+      } 
+      // If typing
+      else {
+        setDisplayText(currentPhrase.substring(0, displayText.length + 1));
+        
+        // If completed typing the phrase, wait and then start deleting
+        if (displayText === currentPhrase) {
+          setTypingSpeed(1500); // Pause at the end
+          setTimeout(() => {
+            setIsDeleting(true);
+            setTypingSpeed(50);
+          }, 1500);
+        }
       }
-    }, 100);
+    }, typingSpeed);
 
-    return () => clearInterval(typingInterval);
-  }, [currentPhraseIndex, index, phrases, displayText.length]);
+    return () => clearTimeout(interval);
+  }, [currentPhraseIndex, displayText, isDeleting, phrases, typingSpeed]);
 
   // Cursor blinking animation
   useEffect(() => {
@@ -160,14 +149,15 @@ const HeroSection = () => {
           
           <div className="order-1 md:order-2 flex justify-center">
             <div className="relative w-64 h-64 md:w-80 md:h-80">
-              {/* Profile image placeholder with gradient border */}
+              {/* Profile image with gradient border */}
               <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary via-primary/50 to-primary animate-spin-slow"></div>
               <div className="absolute inset-[6px] rounded-full bg-background"></div>
-              <div className="absolute inset-[12px] rounded-full bg-muted overflow-hidden">
-                {/* Replace with actual image when available */}
-                <div className="w-full h-full flex items-center justify-center text-6xl font-bold text-primary">
-                  PB
-                </div>
+              <div className="absolute inset-[12px] rounded-full overflow-hidden">
+                <img 
+                  src="/lovable-uploads/f0260894-4985-44b1-b4a2-3dc26ef8cc72.png" 
+                  alt="Pankaj Bindra" 
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </div>
