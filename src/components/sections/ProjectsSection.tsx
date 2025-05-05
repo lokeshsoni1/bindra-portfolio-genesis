@@ -19,14 +19,14 @@ const projects: Project[] = [
     tags: ["Python", "GUI", "Desktop App"],
     github: "https://github.com/lokeshsoni1/python_calculator",
     demo: "https://lokeshsoni1.github.io/python_calculator/",
-    image: "/assets/calculator-project.jpg",
+    image: "https://images.unsplash.com/photo-1587145820266-a5951ee6f620?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
   },
   {
     title: "Portfolio Website",
     description: "A responsive personal portfolio website showcasing my projects, skills, and experience. Built with React, TypeScript, and Tailwind CSS.",
     tags: ["React", "TypeScript", "Tailwind"],
     github: "#",
-    image: "/assets/portfolio-project.jpg",
+    image: "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
   },
   {
     title: "Milk Planner",
@@ -34,7 +34,7 @@ const projects: Project[] = [
     tags: ["Planning", "Management", "Organization"],
     github: "https://github.com/lokeshsoni1/milk_planner",
     demo: "https://lokeshsoni1.github.io/milk_planner/",
-    image: "/assets/milk-planner.jpg",
+    image: "https://images.unsplash.com/photo-1563203369-26f2e4a5ccf7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
   }
 ];
 

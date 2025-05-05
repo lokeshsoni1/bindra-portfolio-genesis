@@ -10,19 +10,80 @@ interface Skill {
   percentage: number;
   category: "frontend" | "backend" | "design" | "other";
   icon?: JSX.Element;
+  bgImage: string;
 }
 
 const skills: Skill[] = [
-  { name: "HTML5", percentage: 85, category: "frontend", icon: <Code size={22} /> },
-  { name: "CSS3", percentage: 80, category: "frontend", icon: <Code size={22} /> },
-  { name: "JavaScript", percentage: 75, category: "frontend", icon: <Code size={22} /> },
-  { name: "React", percentage: 70, category: "frontend", icon: <Code size={22} /> },
-  { name: "TypeScript", percentage: 65, category: "frontend", icon: <Code size={22} /> },
-  { name: "Python", percentage: 80, category: "backend", icon: <Code size={22} /> },
-  { name: "Node.js", percentage: 60, category: "backend", icon: <Code size={22} /> },
-  { name: "UI/UX Design", percentage: 75, category: "design", icon: <Star size={22} /> },
-  { name: "Git", percentage: 70, category: "other", icon: <Code size={22} /> },
-  { name: "Problem Solving", percentage: 85, category: "other", icon: <Star size={22} /> },
+  { 
+    name: "HTML5", 
+    percentage: 85, 
+    category: "frontend", 
+    icon: <Code size={22} />,
+    bgImage: "linear-gradient(135deg, #F59E0B10, #F59E0B30)" 
+  },
+  { 
+    name: "CSS3", 
+    percentage: 80, 
+    category: "frontend", 
+    icon: <Code size={22} />,
+    bgImage: "linear-gradient(135deg, #3B82F610, #3B82F630)" 
+  },
+  { 
+    name: "JavaScript", 
+    percentage: 75, 
+    category: "frontend", 
+    icon: <Code size={22} />,
+    bgImage: "linear-gradient(135deg, #FBBF2410, #FBBF2430)" 
+  },
+  { 
+    name: "React", 
+    percentage: 70, 
+    category: "frontend", 
+    icon: <Code size={22} />,
+    bgImage: "linear-gradient(135deg, #38BDF810, #38BDF830)" 
+  },
+  { 
+    name: "TypeScript", 
+    percentage: 65, 
+    category: "frontend", 
+    icon: <Code size={22} />,
+    bgImage: "linear-gradient(135deg, #2563EB10, #2563EB30)" 
+  },
+  { 
+    name: "Python", 
+    percentage: 80, 
+    category: "backend", 
+    icon: <Code size={22} />,
+    bgImage: "linear-gradient(135deg, #10B98110, #10B98130)" 
+  },
+  { 
+    name: "Node.js", 
+    percentage: 60, 
+    category: "backend", 
+    icon: <Code size={22} />,
+    bgImage: "linear-gradient(135deg, #65A30D10, #65A30D30)" 
+  },
+  { 
+    name: "UI/UX Design", 
+    percentage: 75, 
+    category: "design", 
+    icon: <Star size={22} />,
+    bgImage: "linear-gradient(135deg, #EC489910, #EC489930)" 
+  },
+  { 
+    name: "Git", 
+    percentage: 70, 
+    category: "other", 
+    icon: <Code size={22} />,
+    bgImage: "linear-gradient(135deg, #D9464910, #D9464930)" 
+  },
+  { 
+    name: "Problem Solving", 
+    percentage: 85, 
+    category: "other", 
+    icon: <Star size={22} />,
+    bgImage: "linear-gradient(135deg, #8B5CF610, #8B5CF630)" 
+  },
 ];
 
 const SkillsSection = () => {
@@ -125,9 +186,10 @@ const SkillsSection = () => {
             <HoverCard key={skill.name} openDelay={200} closeDelay={100}>
               <HoverCardTrigger asChild>
                 <div 
-                  className="bg-card hover:bg-card/90 border rounded-lg p-4 text-center transition-all 
+                  className="border rounded-lg p-4 text-center transition-all 
                   hover:-translate-y-1 hover:shadow-md animate-fade-in flex flex-col items-center justify-center
                   aspect-square cursor-pointer"
+                  style={{ background: skill.bgImage }}
                 >
                   <div className="mb-2 text-primary">
                     {skill.icon}
@@ -148,7 +210,7 @@ const SkillsSection = () => {
                     <span className="text-primary font-medium">{skill.percentage}%</span>
                   </div>
                   <Progress 
-                    value={skill.percentage} 
+                    value={visibleSkills[skill.name] ? skill.percentage : 0} 
                     className="h-2" 
                     aria-label={`${skill.name} proficiency: ${skill.percentage}%`}
                   />
