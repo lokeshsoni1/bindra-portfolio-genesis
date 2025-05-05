@@ -1,24 +1,28 @@
 
 import { useRef, useEffect, useState } from "react";
-import { Star } from "lucide-react";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
+import { Progress } from "@/components/ui/progress";
+import { Star, Code } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 interface Skill {
   name: string;
   percentage: number;
   category: "frontend" | "backend" | "design" | "other";
+  icon?: JSX.Element;
 }
 
 const skills: Skill[] = [
-  { name: "HTML5", percentage: 85, category: "frontend" },
-  { name: "CSS3", percentage: 80, category: "frontend" },
-  { name: "JavaScript", percentage: 75, category: "frontend" },
-  { name: "React", percentage: 70, category: "frontend" },
-  { name: "TypeScript", percentage: 65, category: "frontend" },
-  { name: "Python", percentage: 80, category: "backend" },
-  { name: "Node.js", percentage: 60, category: "backend" },
-  { name: "UI/UX Design", percentage: 75, category: "design" },
-  { name: "Git", percentage: 70, category: "other" },
-  { name: "Problem Solving", percentage: 85, category: "other" },
+  { name: "HTML5", percentage: 85, category: "frontend", icon: <Code size={22} /> },
+  { name: "CSS3", percentage: 80, category: "frontend", icon: <Code size={22} /> },
+  { name: "JavaScript", percentage: 75, category: "frontend", icon: <Code size={22} /> },
+  { name: "React", percentage: 70, category: "frontend", icon: <Code size={22} /> },
+  { name: "TypeScript", percentage: 65, category: "frontend", icon: <Code size={22} /> },
+  { name: "Python", percentage: 80, category: "backend", icon: <Code size={22} /> },
+  { name: "Node.js", percentage: 60, category: "backend", icon: <Code size={22} /> },
+  { name: "UI/UX Design", percentage: 75, category: "design", icon: <Star size={22} /> },
+  { name: "Git", percentage: 70, category: "other", icon: <Code size={22} /> },
+  { name: "Problem Solving", percentage: 85, category: "other", icon: <Star size={22} /> },
 ];
 
 const SkillsSection = () => {
@@ -116,30 +120,67 @@ const SkillsSection = () => {
           </button>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {filteredSkills.map((skill) => (
-            <div key={skill.name} className="animate-fade-in">
-              <div className="flex justify-between items-center mb-2">
-                <div className="flex items-center gap-2">
-                  <Star size={16} className="text-primary" />
-                  <h3 className="font-medium">{skill.name}</h3>
-                </div>
-                <span className="text-primary font-medium">{skill.percentage}%</span>
-              </div>
-              <div className="skill-bar">
+            <HoverCard key={skill.name} openDelay={200} closeDelay={100}>
+              <HoverCardTrigger asChild>
                 <div 
-                  className="skill-progress" 
-                  style={{ 
-                    width: visibleSkills[skill.name] ? `${skill.percentage}%` : '0%',
-                  }}
-                ></div>
-              </div>
-            </div>
+                  className="bg-card hover:bg-card/90 border rounded-lg p-4 text-center transition-all 
+                  hover:-translate-y-1 hover:shadow-md animate-fade-in flex flex-col items-center justify-center
+                  aspect-square cursor-pointer"
+                >
+                  <div className="mb-2 text-primary">
+                    {skill.icon}
+                  </div>
+                  <h3 className="font-medium text-sm">{skill.name}</h3>
+                  <Badge 
+                    variant="secondary" 
+                    className="mt-2 text-xs text-muted-foreground"
+                  >
+                    {skill.category}
+                  </Badge>
+                </div>
+              </HoverCardTrigger>
+              <HoverCardContent className="w-full max-w-md p-4">
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <h4 className="font-medium">{skill.name}</h4>
+                    <span className="text-primary font-medium">{skill.percentage}%</span>
+                  </div>
+                  <Progress 
+                    value={skill.percentage} 
+                    className="h-2" 
+                    aria-label={`${skill.name} proficiency: ${skill.percentage}%`}
+                  />
+                  <p className="text-sm text-muted-foreground pt-2">
+                    {getSkillDescription(skill.name)}
+                  </p>
+                </div>
+              </HoverCardContent>
+            </HoverCard>
           ))}
         </div>
       </div>
     </section>
   );
 };
+
+// Helper function to get skill descriptions
+function getSkillDescription(skillName: string): string {
+  const descriptions: Record<string, string> = {
+    "HTML5": "Proficient in semantic HTML5 markup with accessibility considerations.",
+    "CSS3": "Strong understanding of CSS3 including animations, flexbox, and grid layouts.",
+    "JavaScript": "Solid JavaScript skills with ES6+ features and DOM manipulation.",
+    "React": "Experience building reusable components and managing state in React applications.",
+    "TypeScript": "Developing type-safe applications with TypeScript interfaces and types.",
+    "Python": "Python programming for automation, data processing, and backend development.",
+    "Node.js": "Working with server-side JavaScript using Node.js and Express.",
+    "UI/UX Design": "Creating responsive, intuitive, and accessible user interfaces.",
+    "Git": "Version control with Git including branching, merging, and resolving conflicts.",
+    "Problem Solving": "Analytical approach to breaking down complex problems into manageable solutions."
+  };
+  
+  return descriptions[skillName] || "Skilled in various aspects of this technology.";
+}
 
 export default SkillsSection;
